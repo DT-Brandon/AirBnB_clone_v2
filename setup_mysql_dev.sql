@@ -3,6 +3,8 @@
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 -- create a user and grant privileges
 CREATE USER 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
+-- grantr usage
+GRANT USAGE ON *.* TO 'hbnb_dev'@'localhost';
 -- grant privileges
 GRANT ALL ON hbnb_dev_db.*
 TO 'hbnb_dev'@'localhost'
