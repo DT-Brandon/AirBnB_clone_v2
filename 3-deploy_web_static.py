@@ -1,7 +1,10 @@
 #!/usr/bin/python3
-"""Generates a .tgz archive from the
+"""
+do_pack(): Generates a .tgz archive from the
 contents of the web_static folder
-Distributes an archive to a web server"""
+do_deploy(): Distributes an archive to a web server
+deploy (): Creates and distributes an archive to a web server
+"""
 
 from fabric.operations import local, run, put
 from datetime import datetime
@@ -16,12 +19,14 @@ env.hosts = ['100.26.226.165', '18.210.15.9']
 def do_pack():
     """Function to compress files in an archive"""
     local("mkdir -p versions")
-    result = local("tar -cvzf versions/web_static_{}.tgz web_static"
-                   .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")),
-                   capture=True)
+    filename = "versions/web_static_{}.tgz".format(datetime.strftime(
+                                                   datetime.now(),
+                                                   "%Y%m%d%H%M%S"))
+    result = local("tar -cvzf {} web_static"
+                   .format(filename))
     if result.failed:
         return None
-    return result
+    return filename
 
 
 def do_deploy(archive_path):
@@ -62,3 +67,12 @@ def do_deploy(archive_path):
         return False
     print('New version deployed!')
     return True
+
+
+def deploy():
+    """Creates and distributes an archive to a web server"""
+    filepath = do_pack()
+    if filepath is None:
+        return False
+    d = do_deploy(filepath)
+    return d
