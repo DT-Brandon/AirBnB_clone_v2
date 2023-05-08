@@ -95,4 +95,3 @@ def do_clean(number=0):
             continue
         run("rm -rf /data/web_static/releases/{}"
             .format(i))
-
