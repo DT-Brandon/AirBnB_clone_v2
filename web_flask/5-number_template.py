@@ -1,4 +1,5 @@
- a Flask web application"""
+#!/usr/bin/python3
+"""Starts a Flask web application"""
 
 from flask import Flask
 from flask import render_template
